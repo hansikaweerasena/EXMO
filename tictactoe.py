@@ -1,7 +1,12 @@
 # Tic Tac Toe
 
 import random
-from draw import send
+from draw import plot
+import argparse
+
+parser = argparse.ArgumentParser(description='This is a basic gcode sender. http://crcibernetica.com')
+parser.add_argument('-p','--port',help='Input USB port',required=True)
+args = parser.parse_args()
 
 def drawBoard(board):
     # This function prints out the board that it was passed.
@@ -22,16 +27,14 @@ def drawBoard(board):
 def inputPlayerLetter():
     # Lets the player type which letter they want to be.
     # Returns a list with the player's letter as the first item, and the computer's letter as the second.
-    letter = ''
-    while not (letter == 'X' or letter == 'O'):
-        print('Do you want to be X or O?')
-        letter = raw_input().upper()
+    # letter = ''
+    # while not (letter == 'X' or letter == 'O'):
+    #     print('Do you want to be X or O?')
+    #     letter = raw_input().upper()
 
     # the first element in the tuple is the player's letter, the second is the computer's letter.
-    if letter == 'X':
-        return ['X', 'O']
-    else:
-        return ['O', 'X']
+    return ['O', 'X']
+
 
 def whoGoesFirst():
     # Randomly choose the player who goes first.
@@ -142,11 +145,27 @@ def isBoardFull(board):
 
 def readUserInput(previousBoard):
     newBoard = kobbs()
-    while (previousBoard == newBoard)
+    while (previousBoard == newBoard):
         newBoard = kobbs()
     previousBoard = newBoard
 
-def drawMove(move):
+def getfile(x):
+    return {
+        1 : '1.g',
+        2 : '2.g',
+        3 : '3.g',
+        4 : '4.g',
+        5 : '5.g',
+        6 : '6.g',
+        7 : '7.g',
+        8 : '8.g',
+        9 : '9.g'
+    }[x]
+
+def drawMove(move,port):
+  fileName =getfile(move)
+  plot(fileName,port)
+
 
 
 print('Welcome to Tic Tac Toe!')
@@ -163,9 +182,9 @@ while True:
         if turn == 'player':
             # Player's turn.
             drawBoard(theBoard)
-            #move = getPlayerMove(theBoard)
-            #makeMove(theBoard, playerLetter, move)
-            readUserInput(theBoard)
+            move = getPlayerMove(theBoard)
+            makeMove(theBoard, playerLetter, move)
+            # readUserInput(theBoard)
             if isWinner(theBoard, playerLetter):
                 drawBoard(theBoard)
                 print('Hooray! You have won the game!')
@@ -182,7 +201,7 @@ while True:
             # Computer's turn.
             move = getComputerMove(theBoard, computerLetter)
             makeMove(theBoard, computerLetter, move)
-            drawMove(move)
+            drawMove(move,args.port)
             if isWinner(theBoard, computerLetter):
                 drawBoard(theBoard)
                 print('The computer has beaten you! You lose.')
