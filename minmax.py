@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 
 import random
+import pyttsx
 from draw import plot
+from Final_2 import senseTicTacBoard
 
 import argparse
 
@@ -130,13 +132,17 @@ def get_enemy(player):
     return 'O'
 
 def getPlayerMove(previousBoard):
-    # newBoard = kobbs()
-    # while (previousBoard == newBoard):
-    #     newBoard = kobbs()
-    # for i in range(0,9):
-    #     if(previousBoard[i] == None):
-    #         if(newBoard[i]=='X'):
-    #             return i
+    print("1st sense")
+    speak("your turn")
+    newBoard = senseTicTacBoard()
+    while (previousBoard == newBoard):
+        print("Prveious = new")
+        speak("Hurry up")
+        newBoard = senseTicTacBoard()
+    for i in range(0,9):
+        if(previousBoard[i] == None):
+            if(newBoard[i]=='O'):
+                return i
     return 10
 
 def getfile(x):
@@ -158,37 +164,97 @@ def drawMove(move,port):
 
 def whoGoesFirst():
     # Randomly choose the player who goes first.
-    if random.randint(0, 1) == 0:
+    if random.randint(0, 2) == 2:
         return 'computer'
     else:
         return 'player'
 
-if __name__ == "__main__":
-    board = Tic()
-    board.show()
+def speak(whatToSay):
+    # mixer.init()
+    # mixer.music.load('g:/EXMO/Tic tac toe/speak/'+ file)
+    # mixer.music.play()
+    # print ("Playing audio"+ file)
+    engine = pyttsx.init()
+    engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0')
+    engine.setProperty('rate', 100)
+    engine.say(whatToSay)
+    engine.runAndWait()
 
-    turn = whoGoesFirst()
-    if(turn == 'player'):
-        print ("You makes the first move")
-    else:
-        print ("I makes the first move")
-    while not board.complete():
-        if(turn =='player'):
-            player = 'O'
-            # player_move = getPlayerMove(board.squares)
-            player_move = int(raw_input("Your Move -: "))-1
-            if not player_move in board.available_moves():
-                continue
-            board.make_move(player_move, player)
-            board.show()
-            turn = 'computer'
-        else:    
-            if board.complete():
-                break
-            player = 'X'
-            computer_move = determine(board, player)
-            board.make_move(computer_move, player)
-            # drawMove(computer_move,args.port)
-            board.show()
-            turn = 'player'
-    print "winner is", board.winner()
+def playAgain():
+    # This function returns True if the player wants to play again, otherwise it returns False.
+    print('Do you want to play again? (yes or no)')
+    return raw_input().lower().startswith('y')
+
+def readfromfile():
+    fo = open("count.txt")
+    line = fo.read(10)
+    fo.close()
+    return int(line)
+
+def getwins():
+    fo = open("wins.txt")
+    line = fo.read(10)
+    fo.close()
+    return int(line)
+
+def writetofile(text):
+    f = open('count.txt','w')
+    f.write(str(text))
+    f.close()
+
+def writewins(text):
+    f = open('wins.txt','w')
+    f.write(str(text))
+    f.close()
+
+if __name__ == "__main__":
+    count = readfromfile()
+    nowins = getwins()
+    while True:
+        board = Tic()
+        board.show()
+
+        print(str(count) + " plays")
+        print(str(nowins) + " wins")
+        turn = whoGoesFirst()
+        if(turn == 'player'):
+            print ("You make the first move")
+            speak("You make the first move")
+        else:
+            print ("I make the first move")
+            speak("I make the first move")
+        while not board.complete():
+            if(turn =='player'):
+                player = 'O'
+                player_move = getPlayerMove(board.squares)
+                print(player_move)
+                #player_move = int(raw_input("Your Move -: "))-1
+                if not player_move in board.available_moves():
+                    continue
+                board.make_move(player_move, player)
+                board.show()
+                turn = 'computer'
+            else:    
+                if board.complete():
+                    break
+                player = 'X'
+                computer_move = determine(board, player)
+                board.make_move(computer_move, player)
+                drawMove(computer_move,args.port)
+                board.show()
+                turn = 'player'
+
+        winnerHere = board.winner()
+        print "winner is", winnerHere
+        if(winnerHere =='X'):
+            speak("I won")
+            nowins +=1
+            writewins(nowins)
+        else:
+            speak("Match tied")
+        speak('Thank you')
+        count += 1
+        writetofile(count)
+        if not playAgain():
+            break
+        

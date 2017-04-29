@@ -1,12 +1,14 @@
 from draw import plot
 
-plot("1.g","COM4")
-# plot("2.g","COM4")
-# plot("3.g","COM4")
-# plot("4.g","COM4")
-# plot("5.g","COM4")
-# plot("6.g","COM4")
-# plot("7.g","COM4")
-# plot("8.g","COM4")
-# plot("9.g","COM4")
+port = "COM3"
+# plot("1.g",port)
+# plot("2.g",port)
+# plot("3.g",port)
+# plot("4.g",port)
+# plot("5.g",port)
+# plot("6.g",port)
+# plot("7.g",port)
+# plot("8.g",port)
+plot("5.g",port)
+
 
