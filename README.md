@@ -1,4 +1,4 @@
-# Tic Tac Toe Playing Robot for EXMO
+# Tic Tac Toe Playing Robot for EXMO 2017
 
 This repository contains Python code for a Tic Tac Toe playing robot. And firmware used for the Makebot XY plotter.
 
