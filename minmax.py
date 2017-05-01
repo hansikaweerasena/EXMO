@@ -3,7 +3,7 @@
 import random
 import pyttsx
 from draw import plot
-from Final_2 import senseTicTacBoard
+from see import senseTicTacBoard
 
 import argparse
 
@@ -164,16 +164,13 @@ def drawMove(move,port):
 
 def whoGoesFirst():
     # Randomly choose the player who goes first.
+    # More chance is given to player
     if random.randint(0, 2) == 2:
         return 'computer'
     else:
         return 'player'
 
 def speak(whatToSay):
-    # mixer.init()
-    # mixer.music.load('g:/EXMO/Tic tac toe/speak/'+ file)
-    # mixer.music.play()
-    # print ("Playing audio"+ file)
     engine = pyttsx.init()
     engine.setProperty('voice', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_EN-US_ZIRA_11.0')
     engine.setProperty('rate', 100)

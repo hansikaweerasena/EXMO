@@ -1,0 +1,3 @@
+D:\Opencv\opencv\build\lib\Release
+
+D:\Opencv\opencv\build\bin\Release
