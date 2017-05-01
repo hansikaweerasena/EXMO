@@ -8,16 +8,12 @@ To configure and run the program follow follwing steps.
 
 - You can test the plotter and firmware using the above mention software and then by `EXMO/Testing code/draw from GCOde file.py` make sure to use the correct COM port to run the code.
 
-```python
-python draw from GCOde file.py -p COM3 -f test.g
-```
+`python draw from GCOde file.py -p COM3 -f test.g`
 
 - To configure and test machine vision module frist mount the USB web camera steadily on top and then run `EXMO/Testing code/getboardfromcamera.py`
 
 - After configuring both modules seperately you may run the main application to fully automate the robot. 
 
-```python
-python minmax.py -p COM3
-```
+`python minmax.py -p COM3`
 
 #### --------------------------------------
