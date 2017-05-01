@@ -16,4 +16,8 @@ To configure and run the program follow follwing steps.
 
 `python minmax.py -p COM3`
 
-#### --------------------------------------
+#### Other important points
+
+* count.txt and wins.txt will save the number of times game played and number of wins
+* IF you want to reset the counts and wins manually reset them before playing the game
+* https://notezbyhanz.wordpress.com/2017/04/30/tic-tac-toe-playing-robot-at-exmo2017/ will have a demostation how the code works.
