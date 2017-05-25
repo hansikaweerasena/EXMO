@@ -3,7 +3,7 @@
 import random
 import pyttsx
 from draw import plot
-from see import senseTicTacBoard
+from see3 import senseTicTacBoard
 
 import argparse
 

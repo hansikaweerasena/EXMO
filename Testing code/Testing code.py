@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import operator
 
-CAMERA = 0
+CAMERA = 1
 
 
 def diffImg(t0, t1, t2):
@@ -271,13 +271,9 @@ def senseTicTacBoard():
     cam = cv2.VideoCapture(CAMERA)
 
     # Read three images first:
-    t_minus_rgb = cam.read()[1];
-    t_rgb = cam.read()[1];
-    t_plus_rgb = cam.read()[1];
-    
-    t_minus = cv2.cvtColor(t_minus_rgb[0:480,110:600], cv2.COLOR_RGB2GRAY)
-    t = cv2.cvtColor(t_rgb[0:480,110:600], cv2.COLOR_RGB2GRAY)
-    t_plus = cv2.cvtColor(t_plus_rgb[0:480,110:600], cv2.COLOR_RGB2GRAY)
+    t_minus = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
+    t = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
+    t_plus = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
 
     motionState = False
     motionPeriod = 0
@@ -294,7 +290,7 @@ def senseTicTacBoard():
         _,contours, hierarchy = cv2.findContours(thresh,1,2)
 
 ##        print len(contours)
-        if(len(contours)>10):
+        if(len(contours)>100):
             motionPeriod = motionPeriod + 1
         else:
             nomotionPeriod = nomotionPeriod + 1
@@ -308,17 +304,18 @@ def senseTicTacBoard():
         if(nomotionPeriod > 20):
             if(motionState):
                 print "motion stoped"
-                f = takeCapture(cam)
-                frame = f[0:480,110:600]
+                frame = takeCapture(cam)
                 cv2.imshow("Frame",frame)
-                cv2.imwrite("1.jpg",frame)
+                #cv2.imwrite("1.jpg",frame)
                 board = getBoard(frame)
-                matrix = getMatric(board)
+                cv2.imshow("board",board)
 
-                #cam.release()
-                #cv2.destroyAllWindows()
-                #return matrix
+                matrix = getMatric(board)
                 print matrix
+               # cam.release()
+               # cv2.destroyAllWindows()
+               # return matrix
+                #print matrix
                 #cv2.imshow("Board",board)
             motionState = False
             motionPeriod = 0
@@ -330,7 +327,7 @@ def senseTicTacBoard():
 
         t_minus = t
         t = t_plus
-        t_plus = cv2.cvtColor(cam.read()[1][0:480,110:600], cv2.COLOR_RGB2GRAY)
+        t_plus = cv2.cvtColor(cam.read()[1], cv2.COLOR_RGB2GRAY)
 
         key = cv2.waitKey(10)
         
