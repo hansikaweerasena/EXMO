@@ -31,15 +31,18 @@ def plot(filename, port):
     f.close()
     s.close()
 
+# parser = argparse.ArgumentParser(description='This is a basic gcode sender. http://crcibernetica.com')
+# parser.add_argument('-p','--port',help='Input USB port',required=True)
+# parser.add_argument('-f','--file',help='Gcode file name',required=True)
+# args = parser.parse_args()
+ 
+## show values ##
+
+
+
 def removeComment(string):
 	if (string.find(';')==-1):
 		return string
 	else:
 		return string[:string.index(';')]
  
-# parser = argparse.ArgumentParser(description='This is a basic gcode sender. http://crcibernetica.com')
-# parser.add_argument('-p','--port',help='Input USB port',required=True)
-# parser.add_argument('-f','--file',help='Gcode file name',required=True)
-# args = parser.parse_args()
-
-# plot(args.file, args.port)
